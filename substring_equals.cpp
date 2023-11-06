@@ -7,25 +7,27 @@ int main()
 {
     string str;
     cin >> str;
+    if (str == "")
+        return 0;
+
     int n;
     cin >> n;
 
     int a, b, c;
-    bool *temp = new bool[n];
+    bool temp;
     for (int i = 0; i < n; ++i)
     {
         cin >> a >> b >> c;
-        temp[i] = true;
+        temp = true;
         while (a--)
         {
             if (str[b++] != str[c++])
-                temp[i] = false;
+            {
+                temp = false;
+                break;
+            }
         }
-    }
-
-    for (int i = 0; i < n; ++i)
-    {
-        if (temp[i])
+        if (temp)
             cout << "yes\n";
         else
             cout << "no\n";
