@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <sstream>
+
 using namespace std;
 
 void printArray(const vector<string> &arr)
@@ -40,7 +40,7 @@ void printBuckets(const vector<vector<string>> &buckets, int phase)
 
 void radixSort(vector<string> &arr, int m)
 {
-    for (int i = m - 1; i >= 0; --i)
+    for (int i = m - 1; i > -1; --i)
     {
         vector<vector<string>> buckets(10);
         for (const string &s : arr)
