@@ -31,18 +31,24 @@ bool compare_substrings(const string &input_string, int start1, int start2, int 
 
 int main()
 {
-    string str = " abacaba";
-    int start1 = 1;
-    int start2 = 5;
-    int length = 3;
+    string str;
+    cin >> str;
+    str = " " + str;
+    int k;
+    cin >> k;
 
     prefix_hash(str);
 
-    bool result = compare_substrings(str, start1, start2, length);
-    if (result)
-        cout << "Подстроки равны по хешу" << endl;
-    else
-        cout << "Подстроки не равны по хешу" << endl;
+    int start1, start2, length;
+    while (k--)
+    {
+        cin >> length >> start1 >> start2;
 
+        bool result = compare_substrings(str, ++start1, ++start2, length);
+        if (result)
+            cout << "yes\n";
+        else
+            cout << "no\n";
+    }
     return 0;
 }
