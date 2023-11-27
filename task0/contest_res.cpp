@@ -8,7 +8,7 @@ int main()
     int a, b, n;
     cin >> a >> b >> n;
 
-    if (a - 1 > ceil(b / n))
+    if (a - 1 >= ceil(b / n))
         cout << "Yes";
     else
         cout << "No";

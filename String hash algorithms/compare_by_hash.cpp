@@ -4,59 +4,50 @@
 
 using namespace std;
 
-const int p = 257;
-const long long m = 1e9 + 7;
-vector<long long> hash_value;
-vector<long long> p_pow;
-
-void prefix_hash(const string &s)
-{
-    hash_value.push_back(0);
-    p_pow.push_back(1);
+int countPalindromeSubstrings(const string& s) {
     int n = s.length();
+    vector<int> d1(n), d2(n);
 
-    for (int i = 1; i < n + 1; ++i)
-    {
-        hash_value.push_back((hash_value[i - 1] * p + ((int)s[i])) % m);
-        p_pow.push_back((p_pow[i - 1] * p) % m);
+    int l = 0, r = -1;
+    for (int i = 0; i < n; ++i) {
+        int k = (i > r) ? 1 : min(d1[l + r - i], r - i + 1);
+        while (0 <= i - k && i + k < n && s[i - k] == s[i + k])
+            ++k;
+        d1[i] = k--;
+        if (i + k > r) {
+            l = i - k;
+            r = i + k;
+        }
     }
-}
 
-bool compare_substrings(const string &input_string, int start1, int start2, int length)
-{
-    int hash1 = (hash_value[start1 + length - 1] + hash_value[start2 - 1] * p_pow[length]) % m;
-    int hash2 = (hash_value[start2 + length - 1] + hash_value[start1 - 1] * p_pow[length]) % m;
-    return hash1 == hash2;
-}
-
-vector<int> z_function(string s)
-{
-    int n = (int)s.length();
-    vector<int> z(n);
-    for (int i = 1; i < n; ++i)
-    {
-        bool temp = compare_substrings(s, 0, i, n-i);
-            
+    l = 0;
+    r = -1;
+    for (int i = 0; i < n; ++i) {
+        int k = (i > r) ? 0 : min(d2[l + r - i + 1], r - i + 1);
+        while (0 <= i - k - 1 && i + k < n && s[i - k - 1] == s[i + k])
+            ++k;
+        d2[i] = k--;
+        if (i + k > r) {
+            l = i - k - 1;
+            r = i + k;
+        }
     }
-    return z;
+
+    int count = 0;
+    for (int i = 0; i < n; ++i) {
+        count += d1[i];
+        count += d2[i];
+    }
+
+    return count;
 }
 
-int findbase(){
+int main() {
+    string input;
+    cin >> input;
 
-    return ;
-}
-
-int main()
-{
-    string str;
-    cin >> str;
-    str = " " + str;
-    int start1, start2, length;
-    cin >> start1 >> start2 >> length;
-
-    prefix_hash(str);
-
-    bool result = compare_substrings(str, start1, start2, length);
+    int result = countPalindromeSubstrings(input);
+    cout << result << endl;
 
     return 0;
 }
